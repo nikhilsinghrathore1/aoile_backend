@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arweave Builder Profile - Bento Grid</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-black: #000000;
+        --secondary-gray: #666666;
+        --light-gray: #f5f5f5;
+        --border-gray: #e0e0e0;
+        --white: #ffffff;
+        --accent-red: #ff0000;
+        --grid-gap: 20px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: var(--white);
+        color: var(--primary-black);
+        line-height: 1.6;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      .bento-container {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+        gap: var(--grid-gap);
+        padding: var(--grid-gap);
+        min-height: 100vh;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .bento-item {
+        background: var(--white);
+        border: 1px solid var(--border-gray);
+        border-radius: 24px;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .bento-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(0, 0, 0, 0.02) 50%,
+          transparent 70%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.8s ease;
+        pointer-events: none;
+      }
+
+      .bento-item:hover::before {
+        transform: translateX(100%);
+      }
+
+      .bento-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        border-color: var(--primary-black);
+      }
+
+      /* Profile Picture Section */
+      .profile-section {
+        grid-column: 1 / 5;
+        grid-row: 1 / 4;
+        background: var(--light-gray);
+      }
+
+      .profile-image {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: var(--white);
+        border: 2px solid var(--border-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 54px;
+        font-weight: 600;
+        color: var(--secondary-gray);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        object-fit: contain;
+        margin-bottom: 20px;
+      }
+
+      .profile-image::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.8) 50%,
+          transparent 70%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+
+      .profile-image:hover::before {
+        transform: translateX(100%);
+      }
+
+      .profile-image:hover {
+        transform: scale(1.05);
+        border-color: var(--primary-black);
+      }
+
+      .profile-label {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--secondary-gray);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      /* Name Section */
+      .name-section {
+        grid-column: 5 / 13;
+        grid-row: 1 / 3;
+        align-items: flex-start;
+        text-align: left;
+        justify-content: center;
+      }
+
+      .profile-name {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(3rem, 6vw, 5rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 0.9;
+        margin-bottom: 20px;
+      }
+
+      .profile-title {
+        font-family: "Inter", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: var(--secondary-gray);
+        letter-spacing: 0.01em;
+      }
+
+      /* Bio Section */
+      .bio-section {
+        grid-column: 5 / 13;
+        grid-row: 3 / 6;
+        align-items: flex-start;
+        text-align: left;
+        justify-content: flex-start;
+      }
+
+      .bio-label {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--secondary-gray);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+
+      .profile-bio {
+        font-family: "Inter", sans-serif;
+        font-size: 1.25rem;
+        font-weight: 400;
+        line-height: 1.7;
+        color: var(--primary-black);
+      }
+
+      /* Arweave Info Section */
+      .arweave-section {
+        grid-column: 1/5;
+        grid-row: 4 / 6;
+        background: var(--primary-black);
+        color: var(--white);
+      }
+
+      .arweave-section:hover {
+        background: var(--primary-black);
+        transform: translateY(-4px) scale(1.02);
+      }
+
+      .arweave-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+
+      .arweave-dot {
+        width: 12px;
+        height: 12px;
+        background: var(--accent-red);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      .arweave-label {
+        font-size: 0.9rem;
+        opacity: 0.7;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Stats Sections */
+      .stat-section {
+        background: var(--light-gray);
+      }
+
+      .stat-section-1 {
+        grid-column: 1 / 4;
+        grid-row: 6 / 8;
+      }
+
+      .stat-section-2 {
+        grid-column: 4 / 7;
+        grid-row: 6 / 8;
+      }
+
+      .stat-number {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-black);
+        margin-bottom: 10px;
+      }
+
+      .stat-label {
+        font-family: "Inter", sans-serif;
+        font-size: 0.9rem;
+        color: var(--secondary-gray);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Contact Section */
+      .contact-section {
+        grid-column: 7 / 13;
+        grid-row: 6 / 8;
+        background: var(--light-gray);
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .contact-label {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--secondary-gray);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+
+      .contact-links {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .contact-link {
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        color: var(--primary-black);
+        text-decoration: none;
+        padding: 8px 16px;
+        border: 1px solid var(--border-gray);
+        border-radius: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .contact-link:hover {
+        background: var(--primary-black);
+        color: var(--white);
+        transform: translateY(-2px);
+      }
+
+      /* Decorative Section */
+      .decorative-section {
+        grid-column: 8 / 13;
+        grid-row: 8 / 9;
+        background: var(--light-gray);
+        padding: 20px;
+      }
+
+      .decorative-grid {
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+            var(--border-gray) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, var(--border-gray) 1px, transparent 1px);
+        background-size: 20px 20px;
+        opacity: 0.3;
+      }
+
+      /* Quote Section */
+      .quote-section {
+        grid-column: 1 / 8;
+        grid-row: 8 / 9;
+        background: var(--primary-black);
+        color: var(--white);
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .quote-text {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 400;
+        font-style: italic;
+        line-height: 1.6;
+      }
+
+      /* Animations */
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 0.8;
+        }
+      }
+
+      .bento-item {
+        animation: fadeInUp 0.6s ease-out both;
+      }
+
+      .bento-item:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .bento-item:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .bento-item:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .bento-item:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .bento-item:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+      .bento-item:nth-child(6) {
+        animation-delay: 0.6s;
+      }
+      .bento-item:nth-child(7) {
+        animation-delay: 0.7s;
+      }
+      .bento-item:nth-child(8) {
+        animation-delay: 0.8s;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .bento-container {
+          grid-template-columns: repeat(8, 1fr);
+          grid-template-rows: repeat(12, 1fr);
+        }
+
+        .profile-section {
+          grid-column: 1 / 4;
+          grid-row: 1 / 4;
+        }
+
+        .name-section {
+          grid-column: 4 / 9;
+          grid-row: 1 / 3;
+        }
+
+        .bio-section {
+          grid-column: 1 / 9;
+          grid-row: 4 / 7;
+        }
+
+        .arweave-section {
+          grid-column: 1 / 5;
+          grid-row: 7 / 9;
+        }
+
+        .stat-section-1 {
+          grid-column: 5 / 7;
+          grid-row: 7 / 9;
+        }
+
+        .stat-section-2 {
+          grid-column: 7 / 9;
+          grid-row: 7 / 9;
+        }
+
+        .contact-section {
+          grid-column: 1 / 6;
+          grid-row: 9 / 11;
+        }
+
+        .quote-section {
+          grid-column: 6 / 9;
+          grid-row: 9 / 11;
+        }
+
+        .decorative-section {
+          grid-column: 1 / 9;
+          grid-row: 11 / 12;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .bento-container {
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-rows: repeat(16, 1fr);
+          gap: 15px;
+          padding: 15px;
+        }
+
+        .bento-item {
+          padding: 25px;
+        }
+
+        .profile-section {
+          grid-column: 1 / 5;
+          grid-row: 1 / 4;
+        }
+
+        .name-section {
+          grid-column: 1 / 5;
+          grid-row: 4 / 6;
+          text-align: center;
+          align-items: center;
+        }
+
+        .bio-section {
+          grid-column: 1 / 5;
+          grid-row: 6 / 9;
+          text-align: center;
+          align-items: center;
+        }
+
+        .arweave-section {
+          grid-column: 1 / 5;
+          grid-row: 9 / 11;
+        }
+
+        .stat-section-1 {
+          grid-column: 1 / 3;
+          grid-row: 11 / 13;
+        }
+
+        .stat-section-2 {
+          grid-column: 3 / 5;
+          grid-row: 11 / 13;
+        }
+
+        .contact-section {
+          grid-column: 1 / 5;
+          grid-row: 13 / 15;
+          text-align: center;
+          align-items: center;
+        }
+
+        .quote-section {
+          grid-column: 1 / 5;
+          grid-row: 15 / 16;
+          text-align: center;
+          align-items: center;
+        }
+
+        .decorative-section {
+          display: none;
+        }
+
+        .profile-image {
+          width: 120px;
+          height: 120px;
+          font-size: 36px;
+        }
+
+        .profile-name {
+          font-size: 2.5rem;
+        }
+      }
+
+      /* Accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      .bento-item:focus-within {
+        outline: 2px solid var(--primary-black);
+        outline-offset: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bento-container" id="bentoContainer">
+      <!-- Content will be injected dynamically -->
+    </div>
+
+    <script>
+      const profileData = {
+        name: "NikoChan uWu",
+        title: "Arweave Builder & Permaweb Pioneer",
+        profileImage:
+          "https://pbs.twimg.com/profile_images/1823258081062428673/5uXY9oAC_400x400.jpg",
+        bio: `Building the future of permanent storage and decentralized applications. 
+                                      Passionate about creating tools that preserve human knowledge forever 
+                                      and enable truly censorship-resistant experiences on the permaweb.`,
+        since: "March 2022",
+        projectsBuilt: "12",
+        arStored: "2.5K",
+        socials: {
+          twitter: "#",
+          github: "#",
+          discord: "#",
+        },
+        quote: `"The permaweb isn't just storage—it's the foundation for a truly decentralized future."`,
+      };
+
+      const container = document.getElementById("bentoContainer");
+
+      container.innerHTML = `
+                                <!-- Profile Picture Section -->
+                                <div class="bento-item profile-section">
+                                  <div class="profile-image" tabindex="0" role="img" aria-label="Profile picture">
+                                    <img src="${profileData.profileImage}" alt="not showing">
+                                  </div>
+                                  <div class="profile-label">Builder Profile</div>
+                                </div>
+                            
+                                <!-- Name Section -->
+                                <div class="bento-item name-section">
+                                  <h1 class="profile-name">${profileData.name}</h1>
+                                  <p class="profile-title">${profileData.title}</p>
+                                </div>
+                            
+                                <!-- Bio Section -->
+                                <div class="bento-item bio-section">
+                                  <div class="bio-label">About</div>
+                                  <p class="profile-bio">${profileData.bio}</p>
+                                </div>
+                            
+                                <!-- Arweave Info Section -->
+                                <div class="bento-item arweave-section">
+                                  <div class="arweave-label">Building Since</div>
+                                  <div class="arweave-info">
+                                    <div class="arweave-dot"></div>
+                                    <span>${profileData.since}</span>
+                                  </div>
+                                </div>
+                            
+                                <!-- Stats Section 1 -->
+                                <div class="bento-item stat-section stat-section-1">
+                                  <div class="stat-number">${profileData.projectsBuilt}</div>
+                                  <div class="stat-label">Projects Built</div>
+                                </div>
+                            
+                                <!-- Stats Section 2 -->
+                                <div class="bento-item stat-section stat-section-2">
+                                  <div class="stat-number">${profileData.arStored}</div>
+                                  <div class="stat-label">AR Stored</div>
+                                </div>
+                            
+                                <!-- Contact Section -->
+                                <div class="bento-item contact-section">
+                                  <div class="contact-label">Connect</div>
+                                  <div class="contact-links">
+                                    <a href="${profileData.socials.twitter}" class="contact-link">Twitter</a>
+                                    <a href="${profileData.socials.github}" class="contact-link">GitHub</a>
+                                    <a href="${profileData.socials.discord}" class="contact-link">Discord</a>
+                                  </div>
+                                </div>
+                            
+                                <!-- Quote Section -->
+                                <div class="bento-item quote-section">
+                                  <p class="quote-text">${profileData.quote}</p>
+                                </div>
+                            
+                                <!-- Decorative Section -->
+                                <div class="bento-item decorative-section">
+                                  <div class="decorative-grid"></div>
+                                </div>
+                              `;
+
+      // Keep your hover interaction JS
+      document.querySelectorAll(".bento-item").forEach((item) => {
+        item.addEventListener("mouseenter", function () {
+          this.style.zIndex = "10";
+        });
+
+        item.addEventListener("mouseleave", function () {
+          this.style.zIndex = "1";
+        });
+      });
+
+      document
+        .querySelector(".profile-image")
+        .addEventListener("click", function () {
+          this.style.transform = "scale(0.95)";
+          setTimeout(() => {
+            this.style.transform = "scale(1.05)";
+            setTimeout(() => {
+              this.style.transform = "scale(1)";
+            }, 150);
+          }, 150);
+        });
+
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".bento-item").forEach((item) => {
+        observer.observe(item);
+      });
+    </script>
+  </body>
+</html>
