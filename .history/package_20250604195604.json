@@ -4,8 +4,7 @@
   "description": "Automating deployments to Arweave",
   "main": "deploysdk.js",
   "scripts": {
-    "deploy": "node deploysdk.js", 
-    "start": "node server.js"
+    "deploy": "node deploysdk.js"
   },
   "keywords": [
     "arweave",
