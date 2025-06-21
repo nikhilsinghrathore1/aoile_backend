@@ -329,6 +329,8 @@ if (process.argv[1] === __filename) {
                main();
 }
 
+console.log("teating docify")
+
 export {
                Tree,
                run,
