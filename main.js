@@ -330,6 +330,7 @@ if (process.argv[1] === __filename) {
 }
 
 console.log("teating docify")
+console.log("testing again")
 
 export {
                Tree,
