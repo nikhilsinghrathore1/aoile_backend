@@ -18,34 +18,37 @@
 
 [![GitHub](https://img.shields.io/github/license/nikhilsinghrathore1/aoile_backend?style=flat-square)](https://github.com/nikhilsinghrathore1/aoile_backend/blob/main/LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-v18+-brightgreen.svg?style=flat-square)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-4.18.2-blue.svg?style=flat-square)](https://expressjs.com/)
+[![Express.js](https://img.shields.io/badge/Express.js-5.x-blue.svg?style=flat-square)](https://expressjs.com/)
 [![Arweave](https://img.shields.io/badge/Arweave-1.15.0-orange.svg?style=flat-square)](https://www.arweave.org/)
+[![npm](https://img.shields.io/npm/dm/aoile_backend.svg?style=flat-square)](https://www.npmjs.com/)
 
 
 ---
 
 ## 🌟 Feature Highlights ✨
 
-*   🚀 **Automated Deployments:** Effortlessly deploy your projects to Arweave.
-*   🔥 **ANT Integration:** Seamlessly update ANT records for your deployments.
-*   ✨ **Easy-to-use API:** Simple and intuitive RESTful API for deployment.
-*   💫 **Robust Error Handling:** Comprehensive error handling for reliable deployments.
-*   🎨 **Customizable Configuration:** Easily configure deployment settings.
+*   🚀 **Automated Deployments:** Effortlessly deploy your static websites and applications to Arweave.
+*   🔥 **ANT Record Updates:**  Automatically update your Arweave Name Service (ARNS) records.
+*   ✨ **Simple API:**  A clean RESTful API makes integration a breeze.
+*   💫 **Robust Error Handling:**  Built-in error handling ensures reliable deployments.
+*   🎨 **Customizable:** Easily adjust settings through a configuration file.
+*   🛠️ **Retry Mechanism:** Handles transient network issues with automatic retries.
 
 
 ---
 
 ## 🛠️ Tech Stack 📦
 
-| Technology      | Version          | Badge                                      |
-|-----------------|-------------------|----------------------------------------------|
+| Technology      | Version          | Badge                                                              |
+|-----------------|-------------------|----------------------------------------------------------------------|
 | Node.js         | >=18.0.0         | [![Node.js](https://img.shields.io/badge/Node.js-v18+-brightgreen.svg?style=flat-square)](https://nodejs.org/) |
-| Express.js      | ^5.1.0           | [![Express.js](https://img.shields.io/badge/Express.js-5.1.0-blue.svg?style=flat-square)](https://expressjs.com/) |
-| Arweave SDK     | ^1.15.0          | [![Arweave](https://img.shields.io/badge/Arweave-1.15.0-orange.svg?style=flat-square)](https://www.arweave.org/) |
-| @ar.io/sdk     | ^3.13.0          | [![@ar.io/sdk](https://img.shields.io/badge/@ar.io/sdk-3.13.0-purple.svg?style=flat-square)](https://github.com/ArweaveTeam/@ar.io/sdk) |
-| @ardrive/turbo-sdk | ^1.8.0 | [![@ardrive/turbo-sdk](https://img.shields.io/badge/@ardrive/turbo-sdk-1.8.0-green.svg?style=flat-square)](https://github.com/ArDrive/turbo-sdk) |
-| Axios           | ^1.9.0           | [![Axios](https://img.shields.io/badge/Axios-1.9.0-yellow.svg?style=flat-square)](https://axios-http.com/) |
-| Other Dependencies | See `package.json` | [![npm](https://img.shields.io/npm/dm/aoile_backend.svg?style=flat-square)](https://www.npmjs.com/) |
+| Express.js      | ^5.x           | [![Express.js](https://img.shields.io/badge/Express.js-5.x-blue.svg?style=flat-square)](https://expressjs.com/)      |
+| Arweave SDK     | ^1.15.0          | [![Arweave](https://img.shields.io/badge/Arweave-1.15.0-orange.svg?style=flat-square)](https://www.arweave.org/)     |
+| @ar.io/sdk     | ^3.13.0          | [![npm](https://img.shields.io/npm/v/@ar.io/sdk?style=flat-square)](https://www.npmjs.com/package/@ar.io/sdk) |
+| @ardrive/turbo-sdk | ^1.8.0          | [![npm](https://img.shields.io/npm/v/@ardrive/turbo-sdk?style=flat-square)](https://www.npmjs.com/package/@ardrive/turbo-sdk) |
+| Axios           | ^1.9.0           | [![npm](https://img.shields.io/npm/v/axios?style=flat-square)](https://www.npmjs.com/package/axios)           |
+| Body-Parser    | ^2.2.0           | [![npm](https://img.shields.io/npm/v/body-parser?style=flat-square)](https://www.npmjs.com/package/body-parser)    |
+| Cors            | ^2.8.5           | [![npm](https://img.shields.io/npm/v/cors?style=flat-square)](https://www.npmjs.com/package/cors)            |
 
 
 ---
@@ -58,14 +61,21 @@
     git clone https://github.com/nikhilsinghrathore1/aoile_backend.git
     ```
 
-2.  **Install dependencies:**
+2.  **Navigate to the project directory:**
 
     ```bash
     cd aoile_backend
+    ```
+
+3.  **Install dependencies:**
+
+    ```bash
     npm install
     ```
 
-3.  **Start the server:**
+4.  **Create `config.json`:**  (See Configuration section below for details)
+
+5.  **Start the server:**
 
     ```bash
     npm start
@@ -75,25 +85,32 @@
 
 ## 📖 Detailed Usage 📚
 
-This application provides a `/deploy` endpoint that accepts a POST request with the following body:
+The aoile_backend exposes a single endpoint: `/deploy`.  This endpoint accepts a `POST` request with the following JSON payload:
+
 
 ```json
 {
-  "html": "<html>...</html>",
-  "undername": "@your-undername" 
+  "html": "<html>Your HTML content here</html>",
+  "undername": "@your-arweave-name" 
 }
 ```
 
-Here's a curl example:
+**Example using `curl`:**
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -d '{"html": "<html><h1>Hello!</h1></html>", "undername": "@nikhil"}' http://localhost:3000/deploy
+curl -X POST -H "Content-Type: application/json" -d '{"html": "<html><h1>Hello from Arweave!</h1></html>", "undername": "@mysite"}' http://localhost:3000/deploy
 ```
 
+The server will respond with a JSON object containing:
 
-The response will include the transaction ID, Arweave URL, and ARNS URL.
+*   `success`: A boolean indicating success or failure.
+*   `txId`: The transaction ID of the deployed content (if successful).
+*   `arweaveUrl`: The Arweave URL of the deployed content.
+*   `arnsUrl`: The ARNS URL (if successful and `undername` is provided).
+*   `error` (optional): An error message if deployment fails.
+*   `attempts` (optional, only on failure): Number of deployment attempts made.
 
-> **Important:** Ensure you have a `config.json` file in the root directory with the correct ANT process ID, ARNS name, and wallet path.  See the Configuration section below for details.
+> **Important:**  Error responses will include detailed information to help you troubleshoot issues.
 
 
 ---
@@ -102,11 +119,10 @@ The response will include the transaction ID, Arweave URL, and ARNS URL.
 
 ```
 aoile_backend/
-├── app/             // Contains application logic
+├── app/             // Application logic
 │   ├── server.js    // Main server file
-│   └── deploysdk.js // Deployment logic
-├── deploy/          // Directory for deployment files (created dynamically)
-│   └── index.html  // Example deployment file
+│   └── deploysdk.js // Arweave deployment functions
+├── deploy/          // Temporary directory for deployment files
 ├── config.json      // Configuration file
 └── package.json     // Project metadata and dependencies
 ```
@@ -115,20 +131,22 @@ aoile_backend/
 
 ## 🎯 API Documentation 📊
 
-| Endpoint    | Method | Description                                      | Request Body                               | Response Body                                   |
-|-------------|--------|--------------------------------------------------|-------------------------------------------|-------------------------------------------------|
-| `/deploy`   | POST    | Deploys HTML content to Arweave and updates ANT | `{ "html": "<html>...</html>", "undername": "your-undername" }` | `{ "success": true/false, "txId": "...", "arweaveUrl": "...", "arnsUrl": "..." }` |
+| Endpoint    | Method | Description                                      | Request Body                               | Response Body                                                                     |
+|-------------|--------|--------------------------------------------------|-------------------------------------------|------------------------------------------------------------------------------------|
+| `/deploy`   | POST    | Deploys HTML content to Arweave and updates ANT | `{ "html": "<html>...</html>", "undername": "your-undername" }` | `{ "success": true/false, "txId": "...", "arweaveUrl": "...", "arnsUrl": "...", "error": "...", "attempts": ... }` |
 
 
 ---
 
 ## 🔧 Configuration Options ⚙️
 
-| Option        | Description                                                              | Type    | Default     |
-|----------------|--------------------------------------------------------------------------|---------|--------------|
-| `antProcess`  | Your ANT process ID.                                                    | String  | Required    |
-| `arnsName`    | Your ARNS name.                                                           | String  | Required    |
-| `walletPath`  | Path to your Arweave wallet JSON file.                                  | String  | Required    |
+Create a file named `config.json` in the root directory with the following structure:
+
+| Option        | Description                                                              | Type    | Required | Example                                    |
+|----------------|--------------------------------------------------------------------------|---------|----------|---------------------------------------------|
+| `antProcess`  | Your ANT process ID.                                                    | String  | Yes      | `"f0HhRa_7JdC36GpNRxKmzMFUxlxIF_gn7LGxzevPnLY"` |
+| `arnsName`    | Your ARNS name.                                                           | String  | Yes      | `"communis"`                               |
+| `walletPath`  | Path to your Arweave wallet key file (JSON).                             | String  | Yes      | `"path/to/your/wallet.json"`                 |
 
 
 ---
@@ -137,14 +155,15 @@ aoile_backend/
 
 **(Add screenshots here.  Use markdown image syntax: `![Screenshot](screenshot.png)`)**
 
+
 ---
 
 ## 🤝 Contributing Guidelines 🛠️
 
 1.  Fork the repository.
-2.  Create a new branch (`git checkout -b feature/your-feature`).
-3.  Make your changes and commit them (`git commit -m "Add your feature"`).
-4.  Push the branch to your forked repository (`git push origin feature/your-feature`).
+2.  Create a new branch: `git checkout -b feature/your-feature`
+3.  Make your changes and commit them: `git commit -m "Your commit message"`
+4.  Push to your fork: `git push origin feature/your-feature`
 5.  Create a pull request.
 
 
@@ -152,7 +171,7 @@ aoile_backend/
 
 ## 📜 License and Acknowledgments 🌟
 
-This project is licensed under the [AGPL-3.0-only](https://github.com/nikhilsinghrathore1/aoile_backend/blob/main/LICENSE) license.  Thanks to the Arweave team for their amazing work!
+This project is licensed under the [AGPL-3.0-only](https://github.com/nikhilsinghrathore1/aoile_backend/blob/main/LICENSE) license.  Thanks to the Arweave team and the creators of the various Node.js packages used in this project!
 
 
 ---
@@ -170,17 +189,24 @@ This project is licensed under the [AGPL-3.0-only](https://github.com/nikhilsing
 
 <details><summary><b>FAQ</b></summary>
   <p><b>Q: What is the size limit for deployments?</b></p>
-  <p>A: Currently, the free tier of the Turbo SDK limits deployments to 100KB.  Larger deployments may require a paid plan.</p>
-  <p><b>Q: How do I update my ANT record?</b></p>
-  <p>A: Ensure that your `config.json` contains the correct values for `antProcess`, `arnsName`, and `walletPath`. The server automatically updates the ANT record after a successful deployment.</p>
+  <p>A: The free tier of the Turbo SDK has size limitations.  Consider a paid plan for larger deployments.</p>
+  <p><b>Q: How do I handle deployment failures?</b></p>
+  <p>A: The API response includes detailed error messages. Check the logs for more information. The retry mechanism will automatically handle some network errors.</p>
+  <p><b>Q:  Where can I find the deployed content?</b></p>
+  <p>A:  The API response provides both Arweave and ARNS URLs (if configured).</p>
 </details>
 
 ```mermaid
 graph TD
     A[User] --> B{POST /deploy};
     B --> C[Server receives request];
-    C --> D[Deploy to Arweave];
-    D --> E[Update ANT record];
-    E --> F[Return response];
-    F --> A;
+    C --> D{Validate Request};
+    D -- Valid --> E[Deploy to Arweave];
+    D -- Invalid --> F[Return Error];
+    E --> G[Update ANT (if configured)];
+    G --> H[Return Success];
+    F --> H;
+    H --> A;
 ```
+```
+
